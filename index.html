@@ -1,57 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Pure CSS Moleskine Notebooks</title>
+  <title>Pure CSS Moleskine Notebooks</title>
   <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css'><link rel="stylesheet" href="./style.css">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<div class="main-content">
-  <h1>
-     Moleskine Notebooks<small>Hover on any notebook...</small></h1>
+  <div class="main-content">
+    <h1>Open these<small>Hover on any notebook...</small></h1>
   <div class="moleskine-wrapper">
-    <div class="moleskine-notebook">
+    <div class="moleskine-notebook"
+         data-messages='[
+           {"message": "Do you want to start?", "responses": {"yes": 1, "no": null}},
+           {"message": "Great! Are you enjoying this notebook?", "responses": {"yes": 2, "no": 3}},
+           {"message": "Awesome! Keep exploring!", "responses": {"yes": null, "no": null}},
+           {"message": "Oh no! Let us know how to improve.", "responses": {"yes": null, "no": null}}
+         ]'>
       <div class="notebook-cover">
         <div class="notebook-skin">MOLESKINE</div>
       </div>
       <div class="notebook-page"></div>
     </div>
-    <h4>Plain</h4>
   </div>
-  <div class="moleskine-wrapper">
-    <div class="moleskine-notebook">
-      <div class="notebook-cover blue">
-        <div class="notebook-skin">MOLESKINE</div>
+    <div class="moleskine-wrapper">
+      <div class="moleskine-notebook" data-message="This is the message for the second notebook.">
+        <div class="notebook-cover blue">
+          <div class="notebook-skin">Dinner?</div>
+        </div>
+        <div class="notebook-page ruled"></div>
       </div>
-      <div class="notebook-page ruled"></div>
     </div>
-    <h4>Ruled</h4>
   </div>
-  <div class="moleskine-wrapper">
-    <div class="moleskine-notebook">
-      <div class="notebook-cover yellow">
-        <div class="notebook-skin">MOLESKINE</div>
-      </div>
-      <div class="notebook-page squared"></div>
-    </div>
-    <h4>Squared</h4>
-  </div>
-  <div class="moleskine-wrapper">
-    <div class="moleskine-notebook">
-      <div class="notebook-cover green">
-        <div class="notebook-skin">MOLESKINE</div>
-      </div>
-      <div class="notebook-page dotted"></div>
-    </div>
-    <h4>Dotted</h4>
-  </div>
- 
-</div>
-<!-- partial -->
-  
+  <script type="module">
+    import NotebookHandler from './NotebookHandler.js';
+    document.addEventListener('DOMContentLoaded', () => {
+      new NotebookHandler();
+    });
+  </script>
 </body>
 </html>
