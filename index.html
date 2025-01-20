@@ -10,29 +10,34 @@
 <body>
   <div class="main-content">
     <h1>Open these<small>Hover on any notebook...</small></h1>
-  <div class="moleskine-wrapper">
-    <div class="moleskine-notebook"
-         data-messages='[
-           {"message": "Do you want to start?", "responses": {"yes": 1, "no": null}},
-           {"message": "Great! Are you enjoying this notebook?", "responses": {"yes": 2, "no": 3}},
-           {"message": "Awesome! Keep exploring!", "responses": {"yes": null, "no": null}},
-           {"message": "Oh no! Let us know how to improve.", "responses": {"yes": null, "no": null}}
-         ]'>
-      <div class="notebook-cover">
-        <div class="notebook-skin">MOLESKINE</div>
-      </div>
-      <div class="notebook-page"></div>
-    </div>
-  </div>
+    
+    <!-- First Notebook: Single Message -->
     <div class="moleskine-wrapper">
-      <div class="moleskine-notebook" data-message="This is the message for the second notebook.">
+      <div class="moleskine-notebook" data-message="This is the message for the first notebook.">
+        <div class="notebook-cover">
+          <div class="notebook-skin">MOLESKINE</div>
+        </div>
+        <div class="notebook-page"></div>
+      </div>
+    </div>
+
+    <!-- Second Notebook: Ongoing Messages -->
+    <div class="moleskine-wrapper">
+      <div class="moleskine-notebook"
+           data-messages='[
+             {"message": "Do you want to start the journey?", "responses": {"yes": 1, "no": null}},
+             {"message": "Are you ready for the next step?", "responses": {"yes": 2, "no": 3}},
+             {"message": "Great! Keep moving forward!", "responses": {"yes": null, "no": null}},
+             {"message": "Take your time. Come back when ready.", "responses": {"yes": null, "no": null}}
+           ]'>
         <div class="notebook-cover blue">
-          <div class="notebook-skin">Dinner?</div>
+          <div class="notebook-skin">MOLESKINE</div>
         </div>
         <div class="notebook-page ruled"></div>
       </div>
     </div>
   </div>
+
   <script type="module">
     import NotebookHandler from './NotebookHandler.js';
     document.addEventListener('DOMContentLoaded', () => {

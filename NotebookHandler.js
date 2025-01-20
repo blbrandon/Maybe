@@ -6,21 +6,26 @@ class NotebookHandler {
   
     initialize() {
       this.notebooks.forEach((notebook) => {
-        notebook.addEventListener('click', () => this.startMessageFlow(notebook));
+        notebook.addEventListener('click', () => {
+          const isOngoing = notebook.hasAttribute('data-messages');
+          if (isOngoing) {
+            this.startMessageFlow(notebook);
+          } else {
+            this.showSingleMessage(notebook.getAttribute('data-message'));
+          }
+        });
       });
     }
   
     startMessageFlow(notebook) {
-      // Get the message flow for the clicked notebook
       const messageFlow = JSON.parse(notebook.getAttribute('data-messages'));
       let currentIndex = 0;
   
       const showNextMessage = (userResponse) => {
         if (userResponse !== undefined) {
-          // Update the index based on user response
           const nextIndex = messageFlow[currentIndex].responses[userResponse];
           if (nextIndex === null) {
-            this.closeMessage(); // End the conversation
+            this.closeMessage();
             return;
           }
           currentIndex = nextIndex;
@@ -29,13 +34,15 @@ class NotebookHandler {
         this.showMessage(message, showNextMessage);
       };
   
-      // Start the message flow
       showNextMessage();
     }
   
+    showSingleMessage(message) {
+      this.showMessage(message, () => this.closeMessage());
+    }
+  
     showMessage(message, onResponse) {
-      const existingContainer = document.querySelector('.message-container');
-      if (existingContainer) document.body.removeChild(existingContainer);
+      this.closeMessage(); // Ensure previous message container is removed
   
       const messageContainer = document.createElement('div');
       messageContainer.className = 'message-container';
@@ -62,20 +69,28 @@ class NotebookHandler {
       const buttonsContainer = document.createElement('div');
       buttonsContainer.style.marginTop = '15px';
   
-      const yesButton = document.createElement('button');
-      yesButton.textContent = 'Yes';
-      Object.assign(yesButton.style, this.getButtonStyles());
-      yesButton.addEventListener('click', () => onResponse('yes'));
+      if (onResponse.length > 0) {
+        const yesButton = document.createElement('button');
+        yesButton.textContent = 'Yes';
+        Object.assign(yesButton.style, this.getButtonStyles());
+        yesButton.addEventListener('click', () => onResponse('yes'));
   
-      const noButton = document.createElement('button');
-      noButton.textContent = 'No';
-      Object.assign(noButton.style, this.getButtonStyles());
-      noButton.addEventListener('click', () => onResponse('no'));
+        const noButton = document.createElement('button');
+        noButton.textContent = 'No';
+        Object.assign(noButton.style, this.getButtonStyles());
+        noButton.addEventListener('click', () => onResponse('no'));
   
-      buttonsContainer.appendChild(yesButton);
-      buttonsContainer.appendChild(noButton);
+        buttonsContainer.appendChild(yesButton);
+        buttonsContainer.appendChild(noButton);
+      } else {
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Close';
+        Object.assign(closeButton.style, this.getButtonStyles());
+        closeButton.addEventListener('click', () => onResponse());
+        buttonsContainer.appendChild(closeButton);
+      }
+  
       messageContainer.appendChild(buttonsContainer);
-  
       document.body.appendChild(messageContainer);
     }
   
